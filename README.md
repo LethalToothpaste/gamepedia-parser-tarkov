@@ -1,0 +1,1 @@
+# gamepedia-parser-tarkov
