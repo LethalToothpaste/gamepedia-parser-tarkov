@@ -6,7 +6,7 @@ import os
 import collections 
 from decomposer import _decompose
 
-url = "https://escapefromtarkov.gamepedia.com/Weapon_mods"
+url = ["https://escapefromtarkov.gamepedia.com/Weapon_mods", "https://escapefromtarkov.gamepedia.com/Weapons"]
 
 # Declaring lists
 headlines = []
@@ -24,7 +24,7 @@ def _setuplogging():
 	level=logging.INFO,
 	datefmt='[%Y-%m-%d %H:%M:%S]')
 
-def _gethtml():
+def _gethtml(url):
 	req = get(url)
 	if req.status_code == 200:
 		logging.info('Request sent and object received from [{}]'.format(url))
@@ -139,20 +139,8 @@ def _formjson():
 						name_list[name_idx]['name'] = "{}".format(tr.select_one('td a')['title'])
 					elif key == "recoil":
 						_paste_data(tmp_td, item_indices, key, name_list, effect_list, name_idx, 'float')
-					# elif key == "accuracy":
-					# 	_paste_data(tmp_td, item_indices, key, name_list, effect_list, name_idx, 'int')
 					elif key == "muzzle_velocity":
 						_paste_data(tmp_td, item_indices, key, name_list, effect_list, name_idx, 'float')
-					# elif key == "check_speed_modifier":
-					# 	_paste_data(tmp_td, item_indices, key, name_list, effect_list, name_idx, 'int')
-					# elif key == "sighting_range":
-					# 	_paste_data(tmp_td, item_indices, key, name_list, effect_list, name_idx, 'int')
-					# elif key == "ergonomics":
-					# 	_paste_data(tmp_td, item_indices, key, name_list, effect_list, name_idx, 'int')
-					# elif key == "loudness":
-					# 	_paste_data(tmp_td, item_indices, key, name_list, effect_list, name_idx, 'int')
-					# elif key == "load_unload_speed_modifier":
-					# 	_paste_data(tmp_td, item_indices, key, name_list, effect_list, name_idx, 'int')
 					elif key == "capacity":
 						_paste_data(tmp_td, item_indices, key, name_list, effect_list, name_idx, 'int')
 					elif key == "magnification":
@@ -160,14 +148,11 @@ def _formjson():
 					else:
 						_paste_data(tmp_td, item_indices, key, name_list, effect_list, name_idx, 'float')
 				name_idx += 1
-				# break 
 			
 			data[idx] = item_list
 			data[idx][tabber_idx] = name_list
 			tabber_idx += 1
-			# break
 		idx += 1
-		# break
 
 	with open("./json/mods.json", "w") as out:
 		ujson.dump(data, out, indent=4, escape_forward_slashes=False) # indent = 4 for pretty output
@@ -175,7 +160,7 @@ def _formjson():
 
 if __name__ == "__main__":
 	_setuplogging()
-	_gethtml()
+	_gethtml(url[0])
 	_soupify()
 	_grab_headlines()
 	_grab_tabbertabs()
