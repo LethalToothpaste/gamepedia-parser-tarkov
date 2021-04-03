@@ -4,10 +4,10 @@ import logging # Логирование
 import ujson # Улучшенный модуль для работы с JSON
 import os # Дефолтные функции для работы с осью, создание и запись в файл
 import collections # Модуль работы с словарями
-from decomposer import _decompose # Мой модуль для разбивки огромного объекта JS на категории #DEPRECIATED
+# from decomposer import _decompose # Мой модуль для разбивки огромного объекта JS на категории #DEPRECIATED
 
 # Создаем список URLов для GET запросов, пока что код использует первый для сбора данных о модах
-url = ["https://escapefromtarkov.gamepedia.com/Weapon_mods", "https://escapefromtarkov.gamepedia.com/Weapons"]
+url = ["https://escapefromtarkov.gamepedia.com/Weapon_mods"]
 
 
 # Декларируем списки для работы парсера
